@@ -1,0 +1,1 @@
+go build ./cmd/cahsper-cli

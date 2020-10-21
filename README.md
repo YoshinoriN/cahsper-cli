@@ -6,13 +6,16 @@ CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
 
 * go 1.15
 
+# Commands
+
+|command||
+|---|---|
+|`help`, `-h`, `--help`|Help about any command.|
+|`version`|Show version number.|
+
 # Build
 
 ```sh
-$ go build ./cmd/cahsper-cli
-
-or
-
-$ sh build.sh  // Linux
-$ build.bat    // Windows
+$ go build
 ```
+

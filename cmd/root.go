@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var rootCmd = &cobra.Command{
+var rootCommand = &cobra.Command{
 	Use:   "cahsper",
 	Short: "CLI tool for Cahsper",
 	Long: `Cahsper is an alternative of twitter for a solitary person.
@@ -22,7 +22,7 @@ func init() {
 }
 
 func Execute() {
-	if err := rootCmd.Execute(); err != nil {
+	if err := rootCommand.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}

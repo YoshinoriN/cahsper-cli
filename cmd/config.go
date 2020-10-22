@@ -8,11 +8,11 @@ import (
 )
 
 func init() {
-	rootCmd.AddCommand(configCmd)
-	configCmd.AddCommand(getConfigListCommmand)
+	rootCommand.AddCommand(configCommand)
+	configCommand.AddCommand(getConfigListCommmand)
 }
 
-var configCmd = &cobra.Command{
+var configCommand = &cobra.Command{
 	Use:   "config",
 	Short: "get/set your config for cahsper",
 	Long:  "get/set your config for cahsper",

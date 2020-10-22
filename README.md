@@ -12,6 +12,7 @@ CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
 |---|---|
 |`help`, `-h`, `--help`|Help about any command.|
 |`version`|Show version number.|
+|`config list`|Show cahsper configure variables.|
 
 # Build
 

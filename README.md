@@ -25,4 +25,7 @@ $ go build
 
 ```sh
 $ go test ./...
+
+// with coverage
+$ go test ./... -v -cover
 ```

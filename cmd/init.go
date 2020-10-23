@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"io"
+	"fmt"
 	"os"
 	"path/filepath"
 
@@ -33,8 +33,7 @@ var initCmd = &cobra.Command{
 			if err != nil {
 				panic(err)
 			}
-			defer file.Close()
-			io.Copy(os.Stdout, file)
+			fmt.Println("Created config file: " + file.Name())
 		}
 		return nil
 	},

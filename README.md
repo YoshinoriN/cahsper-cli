@@ -20,3 +20,8 @@ CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
 $ go build
 ```
 
+# Test
+
+```sh
+$ go test ./...
+```

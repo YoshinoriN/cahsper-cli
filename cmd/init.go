@@ -33,7 +33,9 @@ var initCmd = &cobra.Command{
 			if err != nil {
 				panic(err)
 			}
-			fmt.Println("Created config file: " + file.Name())
+			fmt.Println("created config file: " + file.Name())
+		} else {
+			fmt.Println("config file is already exists: " + configFilePath)
 		}
 		return nil
 	},

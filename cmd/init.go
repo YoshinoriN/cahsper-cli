@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"path/filepath"
 
 	"github.com/YoshinoriN/cahsper-cli/utils"
 	"github.com/spf13/cobra"
@@ -20,14 +19,12 @@ var initCmd = &cobra.Command{
 	Args:  cobra.NoArgs,
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		homeDir := utils.GetUserHomeDirectory()
-		configDir := filepath.Join(homeDir, ".cahsper")
-		configFilePath := filepath.Join(configDir, ".config")
-
+		configDir := utils.GetConfigFileDir()
 		if !utils.Exists(configDir) {
 			utils.MakeDir(configDir)
 		}
 
+		configFilePath := utils.GetConfigFilePath()
 		if !utils.Exists(configFilePath) {
 			file, err := os.OpenFile(configFilePath, os.O_WRONLY|os.O_CREATE, 0600)
 			if err != nil {

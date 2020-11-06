@@ -23,9 +23,7 @@ type Config struct {
 			UserPoolID  string `yaml:"userPoolID"`
 			AppClientID string `yaml:"appClientId"`
 		}
-		ServerURL   string `yaml:"serverUrl"`
-		IDToken     string `yaml:"idToken"`
-		AccessToken string `yaml:"accessToken"`
+		ServerURL string `yaml:"serverUrl"`
 	}
 }
 

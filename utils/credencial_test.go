@@ -1,6 +1,11 @@
 package utils
 
-import "testing"
+import (
+	"log"
+	"testing"
+
+	"github.com/zalando/go-keyring"
+)
 
 const userName = "Jhon Doe"
 const pass = "password!!"
@@ -25,4 +30,12 @@ func TestShouldGetAccountCredential(t *testing.T) {
 		t.Errorf("Can not get password")
 	}
 
+}
+
+// TODO: Is there exists better way?
+func TestTearDown(t *testing.T) {
+	err := keyring.Delete(createKeyringServiceString(Account), userName)
+	if err != nil {
+		log.Fatal(err)
+	}
 }

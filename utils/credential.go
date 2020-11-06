@@ -35,7 +35,7 @@ func createKeyringServiceString(key CredentialKeyName) string {
 	return strings.Join([]string{ServiceName.String(), key.String()}, ":")
 }
 
-func SetCredencial(user string, key CredentialKeyName, value string) error {
+func SetCredential(user string, key CredentialKeyName, value string) error {
 	err := keyring.Set(createKeyringServiceString(key), user, value)
 	if err != nil {
 		log.Fatal(err)

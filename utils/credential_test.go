@@ -11,7 +11,7 @@ const userName = "Jhon Doe"
 const pass = "password!!"
 
 func TestShouldSetAccountCredential(t *testing.T) {
-	err := SetCredencial(userName, Account, pass)
+	err := SetCredential(userName, Account, pass)
 	if err != nil {
 		t.Errorf("Can not set credential")
 	}

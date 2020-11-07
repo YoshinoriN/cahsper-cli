@@ -68,10 +68,8 @@ func InteractInputHelper(fieldName string, key CredentialKeyName, userName strin
 
 	scanner := bufio.NewScanner(os.Stdin)
 	var newValue string
-	for scanner.Scan() {
-		newValue = scanner.Text()
-		break
-	}
+	scanner.Scan()
+	newValue = scanner.Text()
 
 	if strings.TrimSpace(newValue) == "" {
 		if strings.TrimSpace(currentValue) == "" {

@@ -47,29 +47,24 @@ var setConfigCommand = &cobra.Command{
 		scanner := bufio.NewScanner(os.Stdin)
 
 		fmt.Print("Do you want to create a new credential? [y/n]: ")
-		var yn = "y"
-		for scanner.Scan() {
-			yn = strings.ToLower(scanner.Text())
-			break
-		}
+		scanner.Scan()
+		yn := strings.ToLower(scanner.Text())
 
 		if yn != "y" && yn != "n" {
 			fmt.Print("Please input 'y' or 'n'")
 			os.Exit(0)
 		}
 
-		var userName = ""
-		var password = ""
 		if yn == "y" {
 			fmt.Println("Please input new UserName.")
 		} else {
 			fmt.Println("Please input exist UserName.")
 		}
 		fmt.Print("UserName: ")
-		for scanner.Scan() {
-			userName = scanner.Text()
-			break
-		}
+
+		var userName = ""
+		scanner.Scan()
+		userName = scanner.Text()
 
 		if userName == "" {
 			fmt.Print("UserName required.")
@@ -77,7 +72,8 @@ var setConfigCommand = &cobra.Command{
 		}
 
 		var err error
-		if yn == "n" && userName != "" {
+		var password = ""
+		if yn == "n" {
 			userName, password, err = utils.GetAccount(userName)
 			if err != nil {
 				fmt.Printf("UserName %s does not exists. Please input exists UserName or create new one.", userName)

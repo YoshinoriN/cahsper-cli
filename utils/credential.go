@@ -44,6 +44,14 @@ func SetCredential(user string, key CredentialKeyName, value string) error {
 	return nil
 }
 
+func GetCredential(user string, key CredentialKeyName) (string, error) {
+	secret, err := keyring.Get(createKeyringServiceString(key), user)
+	if err != nil {
+		return "", err
+	}
+	return secret, err
+}
+
 func GetAccount(user string) (string, string, error) {
 	secret, err := keyring.Get(createKeyringServiceString(Account), user)
 	if err != nil {

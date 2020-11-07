@@ -32,6 +32,16 @@ func TestShouldGetAccountCredential(t *testing.T) {
 
 }
 
+func TestShouldGetAccountCredentialByGetCredentialFunction(t *testing.T) {
+	p, err := GetCredential(userName, Account)
+	if err != nil {
+		t.Errorf("Can not set credential")
+	}
+	if p != "password!!" {
+		t.Errorf("Can not get password")
+	}
+}
+
 // TODO: Is there exists better way?
 func TestTearDown(t *testing.T) {
 	err := keyring.Delete(createKeyringServiceString(Account), userName)

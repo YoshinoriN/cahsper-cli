@@ -95,9 +95,13 @@ var setConfigCommand = &cobra.Command{
 			os.Exit(1)
 		}
 
-		fmt.Print("IdToken: ")
+		idToken, err := utils.GetCredential(userName, utils.IDToken)
+		if err != nil {
+			os.Exit(1)
+		}
+		fmt.Printf("IdToken: %s", idToken)
 		for scanner.Scan() {
-			idToken := scanner.Text()
+			idToken = scanner.Text()
 			err = utils.SetCredential(userName, utils.IDToken, idToken)
 			if err != nil {
 				os.Exit(1)
@@ -105,9 +109,13 @@ var setConfigCommand = &cobra.Command{
 			break
 		}
 
-		print("AccessToken: ")
+		accessToken, err := utils.GetCredential(userName, utils.AccessToken)
+		if err != nil {
+			os.Exit(1)
+		}
+		fmt.Printf("AccessToken: %s", accessToken)
 		for scanner.Scan() {
-			accessToken := scanner.Text()
+			accessToken = scanner.Text()
 			err = utils.SetCredential(userName, utils.AccessToken, accessToken)
 			if err != nil {
 				os.Exit(1)

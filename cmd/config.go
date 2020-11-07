@@ -87,8 +87,15 @@ var setConfigCommand = &cobra.Command{
 
 		fmt.Printf("Password: %s", password)
 		for scanner.Scan() {
-			password = scanner.Text()
+			t := password + scanner.Text()
+			if strings.TrimSpace(t) != "" {
+				password = t
+			}
 			break
+		}
+		if strings.TrimSpace(password) == "" {
+			fmt.Print("Password required.")
+			os.Exit(0)
 		}
 		err = utils.SetCredential(userName, utils.Account, password)
 		if err != nil {
@@ -101,12 +108,19 @@ var setConfigCommand = &cobra.Command{
 		}
 		fmt.Printf("IdToken: %s", idToken)
 		for scanner.Scan() {
-			idToken = scanner.Text()
-			err = utils.SetCredential(userName, utils.IDToken, idToken)
-			if err != nil {
-				os.Exit(1)
+			t := idToken + scanner.Text()
+			if strings.TrimSpace(t) != "" {
+				idToken = t
 			}
 			break
+		}
+		if strings.TrimSpace(idToken) == "" {
+			fmt.Print("IdToken required.")
+			os.Exit(0)
+		}
+		err = utils.SetCredential(userName, utils.IDToken, idToken)
+		if err != nil {
+			os.Exit(1)
 		}
 
 		accessToken, err := utils.GetCredential(userName, utils.AccessToken)
@@ -115,12 +129,19 @@ var setConfigCommand = &cobra.Command{
 		}
 		fmt.Printf("AccessToken: %s", accessToken)
 		for scanner.Scan() {
-			accessToken = scanner.Text()
-			err = utils.SetCredential(userName, utils.AccessToken, accessToken)
-			if err != nil {
-				os.Exit(1)
+			t := accessToken + scanner.Text()
+			if strings.TrimSpace(t) != "" {
+				accessToken = t
 			}
 			break
+		}
+		if strings.TrimSpace(accessToken) == "" {
+			fmt.Print("AccessToken required.")
+			os.Exit(0)
+		}
+		err = utils.SetCredential(userName, utils.AccessToken, accessToken)
+		if err != nil {
+			os.Exit(1)
 		}
 	},
 }

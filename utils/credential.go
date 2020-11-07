@@ -64,18 +64,21 @@ func GetAccount(user string) (string, string, error) {
 }
 
 func InteractInputHelper(fieldName string, key CredentialKeyName, userName string, currentValue string) {
-	fmt.Printf("%s: %s", fieldName, currentValue)
+	fmt.Printf("%s [%s]: ", fieldName, currentValue)
 
 	scanner := bufio.NewScanner(os.Stdin)
 	var newValue string
 	for scanner.Scan() {
-		newValue = currentValue + scanner.Text()
+		newValue = scanner.Text()
 		break
 	}
 
 	if strings.TrimSpace(newValue) == "" {
-		fmt.Printf("%s required", fieldName)
-		os.Exit(0)
+		if strings.TrimSpace(currentValue) == "" {
+			fmt.Printf("%s required", fieldName)
+			os.Exit(0)
+		}
+		newValue = currentValue
 	}
 	err := SetCredential(userName, key, newValue)
 	if err != nil {

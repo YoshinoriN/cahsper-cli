@@ -1,7 +1,10 @@
 package utils
 
 import (
+	"bufio"
+	"fmt"
 	"log"
+	"os"
 	"strings"
 
 	"github.com/zalando/go-keyring"
@@ -58,4 +61,24 @@ func GetAccount(user string) (string, string, error) {
 		return user, "", err
 	}
 	return user, secret, err
+}
+
+func InteractInputHelper(fieldName string, key CredentialKeyName, userName string, currentValue string) {
+	fmt.Printf("%s: %s", fieldName, currentValue)
+
+	scanner := bufio.NewScanner(os.Stdin)
+	var newValue string
+	for scanner.Scan() {
+		newValue = currentValue + scanner.Text()
+		break
+	}
+
+	if strings.TrimSpace(newValue) == "" {
+		fmt.Printf("%s required", fieldName)
+		os.Exit(0)
+	}
+	err := SetCredential(userName, key, newValue)
+	if err != nil {
+		os.Exit(1)
+	}
 }

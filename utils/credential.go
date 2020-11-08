@@ -3,7 +3,6 @@ package utils
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 
@@ -41,7 +40,6 @@ func createKeyringServiceString(key CredentialKeyName) string {
 func SetCredential(user string, key CredentialKeyName, value string) error {
 	err := keyring.Set(createKeyringServiceString(key), user, value)
 	if err != nil {
-		log.Fatal(err)
 		return err
 	}
 	return nil
@@ -56,15 +54,19 @@ func GetCredential(user string, key CredentialKeyName) (string, error) {
 }
 
 func GetAccount(user string) (string, string, error) {
-	secret, err := keyring.Get(createKeyringServiceString(Account), user)
+	account, err := keyring.Get(createKeyringServiceString(Account), user)
 	if err != nil {
 		return user, "", err
 	}
-	return user, secret, err
+	return user, account, err
 }
 
 func InteractInputHelper(fieldName string, key CredentialKeyName, userName string, currentValue string) {
-	fmt.Printf("%s [%s]: ", fieldName, currentValue)
+	if strings.TrimSpace(currentValue) != "" {
+		fmt.Printf("%s [%s]: ", fieldName, currentValue)
+	} else {
+		fmt.Printf("%s: ", fieldName)
+	}
 
 	scanner := bufio.NewScanner(os.Stdin)
 	var newValue string

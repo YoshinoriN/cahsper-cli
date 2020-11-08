@@ -3,6 +3,7 @@ package cmd
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -46,26 +47,9 @@ var setConfigCommand = &cobra.Command{
 
 		scanner := bufio.NewScanner(os.Stdin)
 
-		fmt.Print("Do you want to create a new credential? [y/n]: ")
-		scanner.Scan()
-		yn := strings.ToLower(scanner.Text())
-
-		if yn != "y" && yn != "n" {
-			fmt.Print("Please input 'y' or 'n'")
-			os.Exit(0)
-		}
-
-		if yn == "y" {
-			fmt.Println("Please input new UserName.")
-		} else {
-			fmt.Println("Please input exist UserName.")
-		}
 		fmt.Print("UserName: ")
-
-		var userName = ""
 		scanner.Scan()
-		userName = scanner.Text()
-
+		userName := scanner.Text()
 		if userName == "" {
 			fmt.Print("UserName required.")
 			os.Exit(0)
@@ -73,24 +57,32 @@ var setConfigCommand = &cobra.Command{
 
 		var err error
 		var password = ""
-		if yn == "n" {
-			userName, password, err = utils.GetAccount(userName)
-			if err != nil {
-				fmt.Printf("UserName %s does not exists. Please input exists UserName or create new one.", userName)
-				os.Exit(0)
+		userName, password, err = utils.GetAccount(userName)
+		if err != nil {
+			if strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
+				fmt.Printf("UserName %s does not exists. Continue to creating new account by %s.\n", userName, userName)
+			} else {
+				log.Fatal(err)
+				os.Exit(1)
 			}
 		}
 		utils.InteractInputHelper("Password", utils.Account, userName, password)
 
 		idToken, err := utils.GetCredential(userName, utils.IDToken)
 		if err != nil {
-			os.Exit(1)
+			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
+				log.Fatal(err)
+				os.Exit(1)
+			}
 		}
 		utils.InteractInputHelper("IdToken", utils.IDToken, userName, idToken)
 
 		accessToken, err := utils.GetCredential(userName, utils.AccessToken)
 		if err != nil {
-			os.Exit(1)
+			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
+				log.Fatal(err)
+				os.Exit(1)
+			}
 		}
 		utils.InteractInputHelper("AccessToken", utils.AccessToken, userName, accessToken)
 	},

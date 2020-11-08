@@ -13,6 +13,8 @@ CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
 |`help`, `-h`, `--help`|Help about any command.|
 |`version`|Show version number.|
 |`init`|Initialize cahsper-cli.|
+|`credential list`|Show cahsper credential variables.|
+|`credential set`|Set cahsper credential variables.|
 |`config list`|Show cahsper configure variables.|
 |`config set`|Set cahsper configure variables.|
 

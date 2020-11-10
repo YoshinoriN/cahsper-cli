@@ -2,6 +2,8 @@ package utils
 
 import (
 	"fmt"
+	"io/ioutil"
+	"log"
 	"os"
 	"path/filepath"
 
@@ -22,9 +24,9 @@ type Config struct {
 		Cognito struct {
 			UserPoolID  string `yaml:"userPoolID"`
 			AppClientID string `yaml:"appClientId"`
-		}
+		} `yaml:"cognito"`
 		ServerURL string `yaml:"serverUrl"`
-	}
+	} `yaml:"settings"`
 }
 
 func Read(configFilePath string) Config {
@@ -40,6 +42,17 @@ func Read(configFilePath string) Config {
 		panic(err)
 	}
 	return config
+}
+
+func Write(configFilePath string, config Config) {
+	d, err := yaml.Marshal(&config)
+	if err != nil {
+		log.Fatalf("error: %v", err)
+	}
+	err = ioutil.WriteFile(configFilePath, d, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
 
 func Print(config Config) {

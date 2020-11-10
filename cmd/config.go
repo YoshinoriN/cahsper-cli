@@ -1,6 +1,10 @@
 package cmd
 
 import (
+	"bufio"
+	"fmt"
+	"os"
+
 	"github.com/YoshinoriN/cahsper-cli/utils"
 	"github.com/spf13/cobra"
 )
@@ -38,6 +42,21 @@ var setConfigCommand = &cobra.Command{
 	Short: "Set cahsper configure variables.",
 	Long:  `Set configure variables.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO
+		scanner := bufio.NewScanner(os.Stdin)
+		config := utils.Config{}
+
+		fmt.Print("Cognito AppClientId: ")
+		scanner.Scan()
+		config.Settings.Cognito.AppClientID = scanner.Text()
+
+		fmt.Print("Cognito UserPoolID: ")
+		scanner.Scan()
+		config.Settings.Cognito.UserPoolID = scanner.Text()
+
+		fmt.Print("ServerURL: ")
+		scanner.Scan()
+		config.Settings.ServerURL = scanner.Text()
+
+		utils.Write(utils.GetConfigFilePath(), config)
 	},
 }

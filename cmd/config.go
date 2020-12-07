@@ -29,8 +29,11 @@ var showConfigCommmand = &cobra.Command{
 	Short: "Show all of cahsper configure variables.",
 	Long:  `Show cahsper configure variables from config file.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// TODO: check file is already exists or not
 		configFilePath := utils.GetConfigFilePath()
+		if !utils.Exists(configFilePath) {
+			fmt.Println("config file not found. Please exec 'init'")
+			return
+		}
 		config := utils.Read(configFilePath)
 		utils.Print(config)
 	},

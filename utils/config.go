@@ -10,15 +10,18 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
+// GetConfigFileDir get config file dir
 func GetConfigFileDir() string {
 	homeDir := GetUserHomeDirectory()
 	return filepath.Join(homeDir, ".cahsper")
 }
 
+// GetConfigFilePath get config file path
 func GetConfigFilePath() string {
 	return filepath.Join(GetConfigFileDir(), ".config")
 }
 
+// Config structure for config file
 type Config struct {
 	Settings struct {
 		Cognito struct {
@@ -29,6 +32,7 @@ type Config struct {
 	} `yaml:"settings"`
 }
 
+// Read read config values from config file
 func Read(configFilePath string) Config {
 	file, err := os.Open(configFilePath)
 	if err != nil {
@@ -44,6 +48,7 @@ func Read(configFilePath string) Config {
 	return config
 }
 
+// Write write config values to config file
 func Write(configFilePath string, config Config) {
 	d, err := yaml.Marshal(&config)
 	if err != nil {
@@ -55,6 +60,7 @@ func Write(configFilePath string, config Config) {
 	}
 }
 
+// Print print config values from config file
 func Print(config Config) {
 	fmt.Print("settings:\n")
 	fmt.Print("  cognito:\n")

@@ -9,12 +9,17 @@ import (
 	"github.com/zalando/go-keyring"
 )
 
+// CredentialKeyName type for CredentialKeyName
 type CredentialKeyName string
 
 const (
+	// ServiceName key name for keyring
 	ServiceName CredentialKeyName = "Cahsper"
-	Account     CredentialKeyName = "Account"
-	IDToken     CredentialKeyName = "IdToken"
+	// Account key name for keyring
+	Account CredentialKeyName = "Account"
+	// IDToken key name for keyring
+	IDToken CredentialKeyName = "IdToken"
+	// AccessToken key name for keyring
 	AccessToken CredentialKeyName = "AccessToken"
 )
 
@@ -37,6 +42,7 @@ func createKeyringServiceString(key CredentialKeyName) string {
 	return strings.Join([]string{ServiceName.String(), key.String()}, ":")
 }
 
+// SetCredential set credential to keyring
 func SetCredential(user string, key CredentialKeyName, value string) error {
 	err := keyring.Set(createKeyringServiceString(key), user, value)
 	if err != nil {
@@ -45,6 +51,7 @@ func SetCredential(user string, key CredentialKeyName, value string) error {
 	return nil
 }
 
+// GetCredential get credential from keyring
 func GetCredential(user string, key CredentialKeyName) (string, error) {
 	secret, err := keyring.Get(createKeyringServiceString(key), user)
 	if err != nil {
@@ -53,6 +60,7 @@ func GetCredential(user string, key CredentialKeyName) (string, error) {
 	return secret, err
 }
 
+// GetAccount get account from keyring
 func GetAccount(user string) (string, string, error) {
 	account, err := keyring.Get(createKeyringServiceString(Account), user)
 	if err != nil {
@@ -61,6 +69,7 @@ func GetAccount(user string) (string, string, error) {
 	return user, account, err
 }
 
+// InteractInputHelper helper function for input credential info
 func InteractInputHelper(fieldName string, key CredentialKeyName, userName string, currentValue string) {
 	if strings.TrimSpace(currentValue) != "" {
 		fmt.Printf("%s [%s]: ", fieldName, currentValue)

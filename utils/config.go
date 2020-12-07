@@ -56,6 +56,9 @@ func Write(configFilePath string, config Config) {
 }
 
 func Print(config Config) {
-	// TODO
-	fmt.Println(config)
+	fmt.Print("settings:\n")
+	fmt.Print("  cognito:\n")
+	fmt.Printf("    userPoolID: %s\n", config.Settings.Cognito.UserPoolID)
+	fmt.Printf("    appClientId: %s\n", config.Settings.Cognito.AppClientID)
+	fmt.Printf("  serverUrl: %s", config.Settings.ServerURL)
 }

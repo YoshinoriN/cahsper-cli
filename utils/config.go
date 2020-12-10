@@ -24,10 +24,13 @@ func GetConfigFilePath() string {
 // Config structure for config file
 type Config struct {
 	Settings struct {
-		Cognito struct {
-			UserPoolID  string `yaml:"userPoolID"`
-			AppClientID string `yaml:"appClientId"`
-		} `yaml:"cognito"`
+		Aws struct {
+			Region  string `yaml:"region"`
+			Cognito struct {
+				UserPoolID  string `yaml:"userPoolID"`
+				AppClientID string `yaml:"appClientId"`
+			} `yaml:"cognito"`
+		} `yaml:"aws"`
 		ServerURL string `yaml:"serverUrl"`
 	} `yaml:"settings"`
 }
@@ -63,8 +66,10 @@ func Write(configFilePath string, config Config) {
 // Print print config values from config file
 func Print(config Config) {
 	fmt.Print("settings:\n")
-	fmt.Print("  cognito:\n")
-	fmt.Printf("    userPoolID: %s\n", config.Settings.Cognito.UserPoolID)
-	fmt.Printf("    appClientId: %s\n", config.Settings.Cognito.AppClientID)
+	fmt.Print("  aws:\n")
+	fmt.Printf("    region: %s\n", config.Settings.Aws.Region)
+	fmt.Print("    cognito:\n")
+	fmt.Printf("      userPoolID: %s\n", config.Settings.Aws.Cognito.UserPoolID)
+	fmt.Printf("      appClientId: %s\n", config.Settings.Aws.Cognito.AppClientID)
 	fmt.Printf("  serverUrl: %s", config.Settings.ServerURL)
 }

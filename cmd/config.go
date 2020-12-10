@@ -48,13 +48,17 @@ var setConfigCommand = &cobra.Command{
 		scanner := bufio.NewScanner(os.Stdin)
 		config := utils.Config{}
 
+		fmt.Print("Cognito Region: ")
+		scanner.Scan()
+		config.Settings.Aws.Region = scanner.Text()
+
 		fmt.Print("Cognito AppClientId: ")
 		scanner.Scan()
-		config.Settings.Cognito.AppClientID = scanner.Text()
+		config.Settings.Aws.Cognito.AppClientID = scanner.Text()
 
 		fmt.Print("Cognito UserPoolID: ")
 		scanner.Scan()
-		config.Settings.Cognito.UserPoolID = scanner.Text()
+		config.Settings.Aws.Cognito.UserPoolID = scanner.Text()
 
 		fmt.Print("ServerURL: ")
 		scanner.Scan()

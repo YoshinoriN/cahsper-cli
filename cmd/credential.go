@@ -106,23 +106,5 @@ var setCredentialCommand = &cobra.Command{
 			}
 		}
 		utils.InteractInputHelper("Password", utils.Account, userName, password)
-
-		idToken, err := utils.GetCredential(userName, utils.IDToken)
-		if err != nil {
-			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
-				log.Fatal(err)
-				os.Exit(1)
-			}
-		}
-		utils.InteractInputHelper("IdToken", utils.IDToken, userName, idToken)
-
-		accessToken, err := utils.GetCredential(userName, utils.AccessToken)
-		if err != nil {
-			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
-				log.Fatal(err)
-				os.Exit(1)
-			}
-		}
-		utils.InteractInputHelper("AccessToken", utils.AccessToken, userName, accessToken)
 	},
 }

@@ -3,17 +3,13 @@ module github.com/YoshinoriN/cahsper-cli
 go 1.15
 
 require (
-	github.com/99designs/keyring v1.1.6
 	github.com/alexrudd/cognito-srp/v2 v2.0.1
-	github.com/aws/aws-sdk-go v1.36.5
 	github.com/aws/aws-sdk-go-v2 v0.30.0
 	github.com/aws/aws-sdk-go-v2/config v0.3.0
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v0.30.0
-	github.com/mitchellh/go-homedir v1.1.0
 	github.com/spf13/cobra v1.1.1
-	github.com/spf13/viper v1.7.0
+	github.com/stretchr/objx v0.2.0 // indirect
 	github.com/zalando/go-keyring v0.1.0
-	golang.org/x/tools v0.0.0-20201105001634-bc3cf281b174 // indirect
+	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	gopkg.in/yaml.v2 v2.3.0
-	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776
 )

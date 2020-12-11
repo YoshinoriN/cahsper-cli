@@ -20,6 +20,33 @@ CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
 |`signin`|Signin to AWS Cognito.|
 |`refresh`|Refersh AWS Cognito token.|
 
+# Supported Cognit operation
+
+* Client Auth flow (`InitiateAuth: USER_SRP_AUTH`)
+    * Get each token
+* Get Refresh Token (`InitiateAuth: REFRESH_TOKEN_AUTH`)
+
+# Config
+
+At first please create config file with `init` command.
+
+It will be create `.cahsper` in users directory after exec `init` command.
+
+Please fill variables by yourself.
+
+```yaml
+settings:
+  aws:
+    region: <your cognito Region>
+    cognito:
+      userName: <default userName>
+      userPoolID: <your cognito userPoolId>
+      appClientId: <your cognito appClientId>
+  serverUrl: <cahsper server url>
+```
+
+Next please input with `credential set` command. After that please exec `signin` command.
+
 # Build
 
 ```sh

@@ -1,9 +1,7 @@
 package cmd
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 
 	"github.com/YoshinoriN/cahsper-cli/utils"
 	"github.com/spf13/cobra"
@@ -45,29 +43,11 @@ var setConfigCommand = &cobra.Command{
 	Short: "Set cahsper configure variables.",
 	Long:  `Set configure variables.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		scanner := bufio.NewScanner(os.Stdin)
-		config := utils.Config{}
-
-		fmt.Print("Cognito Region: ")
-		scanner.Scan()
-		config.Settings.Aws.Region = scanner.Text()
-
-		fmt.Print("Cognito UserName: ")
-		scanner.Scan()
-		config.Settings.Aws.Cognito.UserName = scanner.Text()
-
-		fmt.Print("Cognito AppClientId: ")
-		scanner.Scan()
-		config.Settings.Aws.Cognito.AppClientID = scanner.Text()
-
-		fmt.Print("Cognito UserPoolID: ")
-		scanner.Scan()
-		config.Settings.Aws.Cognito.UserPoolID = scanner.Text()
-
-		fmt.Print("ServerURL: ")
-		scanner.Scan()
-		config.Settings.ServerURL = scanner.Text()
-
-		utils.Write(utils.GetConfigFilePath(), config)
+		configFilePath := utils.GetConfigFilePath()
+		if !utils.Exists(configFilePath) {
+			fmt.Println("config file not found. Please exec 'init'")
+			return
+		}
+		fmt.Printf("\nPlease set config variables by yourself.\nThe config file path is '%s'\n", configFilePath)
 	},
 }

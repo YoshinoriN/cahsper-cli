@@ -21,6 +21,8 @@ const (
 	IDToken CredentialKeyName = "IdToken"
 	// AccessToken key name for keyring
 	AccessToken CredentialKeyName = "AccessToken"
+	// RefreshToken key name for keyring
+	RefreshToken CredentialKeyName = "RefreshToken"
 )
 
 func (credentialKeyName CredentialKeyName) String() string {
@@ -33,6 +35,8 @@ func (credentialKeyName CredentialKeyName) String() string {
 		return "IdToken"
 	case AccessToken:
 		return "AccessToken"
+	case RefreshToken:
+		return "RefreshToken"
 	default:
 		return "" // TODO: error handling
 	}

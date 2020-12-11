@@ -74,6 +74,15 @@ var showCredentialCommmand = &cobra.Command{
 			}
 		}
 		fmt.Println("AccessToken: ", accessToken)
+
+		refreshToken, err := utils.GetCredential(userName, utils.RefreshToken)
+		if err != nil {
+			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
+				log.Fatal(err)
+				os.Exit(1)
+			}
+		}
+		fmt.Println("RefreshToken: ", refreshToken)
 	},
 }
 

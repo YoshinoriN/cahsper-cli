@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -24,28 +23,9 @@ var refreshTokenCommand = &cobra.Command{
 	Use:   "refresh",
 	Short: "refresh token of aws cognito",
 	Long:  "refresh token of aws cognito",
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return errors.New("requires UserName")
-		}
-		if len(args) > 1 {
-			return errors.New("number of argument must be one")
-		}
-		return nil
-	},
+	Args:  cobra.NoArgs,
 	// TODO: refactor
 	Run: func(cmd *cobra.Command, args []string) {
-		userName, _, err := utils.GetAccount(args[0])
-		if err != nil {
-			if strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
-				fmt.Printf("UserName %s does not exists.\n", userName)
-				os.Exit(0)
-			} else {
-				log.Fatal(err)
-				os.Exit(1)
-			}
-		}
-
 		cahsperConfigFilePath := utils.GetConfigFilePath()
 		if !utils.Exists(cahsperConfigFilePath) {
 			fmt.Println("config file not found. Please exec 'init'")
@@ -53,7 +33,8 @@ var refreshTokenCommand = &cobra.Command{
 		}
 		cahsperConfig := utils.Read(cahsperConfigFilePath)
 
-		refreshToken, err := utils.GetCredential(userName, utils.RefreshToken)
+		// TODO: username existing validation
+		refreshToken, err := utils.GetCredential(cahsperConfig.Settings.Aws.Cognito.UserName, utils.RefreshToken)
 		if err != nil {
 			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				log.Fatal(err)
@@ -78,7 +59,7 @@ var refreshTokenCommand = &cobra.Command{
 			log.Fatal(err)
 			panic(err)
 		}
-		utils.SetCredential(userName, utils.AccessToken, *response.AuthenticationResult.AccessToken)
-		utils.SetCredential(userName, utils.IDToken, *response.AuthenticationResult.IdToken)
+		utils.SetCredential(cahsperConfig.Settings.Aws.Cognito.UserName, utils.AccessToken, *response.AuthenticationResult.AccessToken)
+		utils.SetCredential(cahsperConfig.Settings.Aws.Cognito.UserName, utils.IDToken, *response.AuthenticationResult.IdToken)
 	},
 }

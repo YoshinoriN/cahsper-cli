@@ -52,6 +52,10 @@ var setConfigCommand = &cobra.Command{
 		scanner.Scan()
 		config.Settings.Aws.Region = scanner.Text()
 
+		fmt.Print("Cognito UserName: ")
+		scanner.Scan()
+		config.Settings.Aws.Cognito.UserName = scanner.Text()
+
 		fmt.Print("Cognito AppClientId: ")
 		scanner.Scan()
 		config.Settings.Aws.Cognito.AppClientID = scanner.Text()

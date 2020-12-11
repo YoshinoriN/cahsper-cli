@@ -27,6 +27,7 @@ type Config struct {
 		Aws struct {
 			Region  string `yaml:"region"`
 			Cognito struct {
+				UserName    string `yaml:"userName"`
 				UserPoolID  string `yaml:"userPoolID"`
 				AppClientID string `yaml:"appClientId"`
 			} `yaml:"cognito"`
@@ -69,6 +70,7 @@ func Print(config Config) {
 	fmt.Print("  aws:\n")
 	fmt.Printf("    region: %s\n", config.Settings.Aws.Region)
 	fmt.Print("    cognito:\n")
+	fmt.Printf("      userName: %s\n", config.Settings.Aws.Cognito.UserName)
 	fmt.Printf("      userPoolID: %s\n", config.Settings.Aws.Cognito.UserPoolID)
 	fmt.Printf("      appClientId: %s\n", config.Settings.Aws.Cognito.AppClientID)
 	fmt.Printf("  serverUrl: %s", config.Settings.ServerURL)

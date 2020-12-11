@@ -33,19 +33,14 @@ var showCredentialCommmand = &cobra.Command{
 	Long:  "Show all of cahsper credential variables.",
 	Run: func(cmd *cobra.Command, args []string) {
 
-		scanner := bufio.NewScanner(os.Stdin)
-
-		fmt.Print("UserName: ")
-		scanner.Scan()
-		userName := scanner.Text()
-		if userName == "" {
-			fmt.Print("UserName required.")
-			os.Exit(0)
+		cahsperConfigFilePath := utils.GetConfigFilePath()
+		if !utils.Exists(cahsperConfigFilePath) {
+			fmt.Println("config file not found. Please exec 'init'")
+			return
 		}
+		cahsperConfig := utils.Read(cahsperConfigFilePath)
 
-		var err error
-		var password = ""
-		userName, password, err = utils.GetAccount(userName)
+		userName, password, err := utils.GetAccount(cahsperConfig.Settings.Aws.Cognito.UserName)
 		if err != nil {
 			if strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				fmt.Printf("UserName %s does not exists.\n", userName)
@@ -55,6 +50,7 @@ var showCredentialCommmand = &cobra.Command{
 				os.Exit(1)
 			}
 		}
+		fmt.Println("UserName: ", userName)
 		fmt.Println("Password: ", password)
 
 		idToken, err := utils.GetCredential(userName, utils.IDToken)

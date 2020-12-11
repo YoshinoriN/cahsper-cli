@@ -2,7 +2,6 @@ package cmd
 
 import (
 	"context"
-	"errors"
 	"fmt"
 	"log"
 	"os"
@@ -27,18 +26,17 @@ var signInCommand = &cobra.Command{
 	Use:   "signin",
 	Short: "signin aws cognito",
 	Long:  "signin aws cognito",
-	Args: func(cmd *cobra.Command, args []string) error {
-		if len(args) < 1 {
-			return errors.New("requires UserName")
-		}
-		if len(args) > 1 {
-			return errors.New("number of argument must be one")
-		}
-		return nil
-	},
+	Args:  cobra.NoArgs,
 	// TODO: refactor
 	Run: func(cmd *cobra.Command, args []string) {
-		userName, password, err := utils.GetAccount(args[0])
+		cahsperConfigFilePath := utils.GetConfigFilePath()
+		if !utils.Exists(cahsperConfigFilePath) {
+			fmt.Println("config file not found. Please exec 'init'")
+			return
+		}
+		cahsperConfig := utils.Read(cahsperConfigFilePath)
+
+		userName, password, err := utils.GetAccount(cahsperConfig.Settings.Aws.Cognito.UserName)
 		if err != nil {
 			if strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				fmt.Printf("UserName %s does not exists.\n", userName)
@@ -48,13 +46,6 @@ var signInCommand = &cobra.Command{
 				os.Exit(1)
 			}
 		}
-
-		cahsperConfigFilePath := utils.GetConfigFilePath()
-		if !utils.Exists(cahsperConfigFilePath) {
-			fmt.Println("config file not found. Please exec 'init'")
-			return
-		}
-		cahsperConfig := utils.Read(cahsperConfigFilePath)
 
 		csrp, _ := cognitosrp.NewCognitoSRP(
 			userName,

@@ -70,7 +70,7 @@ var signInCommand = &cobra.Command{
 		)
 		svc := cip.NewFromConfig(cfg)
 
-		resp, err := svc.InitiateAuth(context.Background(), &cip.InitiateAuthInput{
+		response, err := svc.InitiateAuth(context.Background(), &cip.InitiateAuthInput{
 			AuthFlow:       types.AuthFlowTypeUserSrpAuth,
 			ClientId:       aws.String(csrp.GetClientId()),
 			AuthParameters: csrp.GetAuthParams(),
@@ -80,10 +80,10 @@ var signInCommand = &cobra.Command{
 			panic(err)
 		}
 
-		if resp.ChallengeName == types.ChallengeNameTypePasswordVerifier {
-			challengeResponses, _ := csrp.PasswordVerifierChallenge(resp.ChallengeParameters, time.Now())
+		if response.ChallengeName == types.ChallengeNameTypePasswordVerifier {
+			challengeResponses, _ := csrp.PasswordVerifierChallenge(response.ChallengeParameters, time.Now())
 
-			resp, err := svc.RespondToAuthChallenge(context.Background(), &cip.RespondToAuthChallengeInput{
+			response, err := svc.RespondToAuthChallenge(context.Background(), &cip.RespondToAuthChallengeInput{
 				ChallengeName:      types.ChallengeNameTypePasswordVerifier,
 				ChallengeResponses: challengeResponses,
 				ClientId:           aws.String(csrp.GetClientId()),
@@ -93,10 +93,9 @@ var signInCommand = &cobra.Command{
 				panic(err)
 			}
 
-			// TODO: write to keyring
-			fmt.Printf("Access Token: %s\n", *resp.AuthenticationResult.AccessToken)
-			fmt.Printf("ID Token: %s\n", *resp.AuthenticationResult.IdToken)
-			fmt.Printf("Refresh Token: %s\n", *resp.AuthenticationResult.RefreshToken)
+			utils.SetCredential(userName, utils.AccessToken, *response.AuthenticationResult.AccessToken)
+			utils.SetCredential(userName, utils.IDToken, *response.AuthenticationResult.IdToken)
+			utils.SetCredential(userName, utils.RefreshToken, *response.AuthenticationResult.RefreshToken)
 		}
 	},
 }

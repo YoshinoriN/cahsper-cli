@@ -4,6 +4,7 @@ go 1.15
 
 require (
 	github.com/alexrudd/cognito-srp/v2 v2.0.1
+	github.com/aws/aws-sdk-go v1.36.6
 	github.com/aws/aws-sdk-go-v2 v0.30.0
 	github.com/aws/aws-sdk-go-v2/config v0.3.0
 	github.com/aws/aws-sdk-go-v2/service/cognitoidentityprovider v0.30.0

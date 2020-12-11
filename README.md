@@ -18,6 +18,7 @@ CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
 |`config list`|Show cahsper configure variables.|
 |`config set`|Set cahsper configure variables.|
 |`signin <userName>`|Signin AWS Cognito.|
+|`refresh <userName>`|Refersh AWS Cognito token.|
 
 # Build
 

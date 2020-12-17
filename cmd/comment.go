@@ -1,6 +1,7 @@
 package cmd
 
 import (
+	"bufio"
 	"bytes"
 	"errors"
 	"fmt"
@@ -8,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"path"
 	"strconv"
 	"strings"
@@ -57,6 +59,19 @@ var postCommentCommand = &cobra.Command{
 			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				log.Fatal(err)
 			}
+		}
+
+		scanner := bufio.NewScanner(os.Stdin)
+		fmt.Print("Do you want to post a comment? [y/n]: ")
+		scanner.Scan()
+		yn := strings.ToLower(scanner.Text())
+
+		if yn != "y" && yn != "n" {
+			fmt.Print("Please input 'y' or 'n'")
+			os.Exit(0)
+		}
+		if yn != "y" {
+			os.Exit(0)
 		}
 
 		u, err := url.Parse(cahsperConfig.Settings.ServerURL)

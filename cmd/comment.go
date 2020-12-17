@@ -9,6 +9,7 @@ import (
 	"net/url"
 	"os"
 	"path"
+	"strconv"
 	"strings"
 
 	"github.com/YoshinoriN/cahsper-cli/utils"
@@ -73,8 +74,14 @@ var postCommentCommand = &cobra.Command{
 		}
 		defer response.Body.Close()
 
-		fmt.Println(response.StatusCode)
-		fmt.Println(response.ContentLength)
+		fmt.Println("")
+		fmt.Printf("Request URL: %s\n", response.Request.URL)
+		fmt.Printf("Proto: %s\n", response.Proto)
+		fmt.Printf("Date: %s\n", response.Header.Get("Date"))
+		fmt.Printf("Server: %s\n", response.Header.Get("Server"))
+		fmt.Printf("Request Method: %s\n", response.Request.Method)
+		fmt.Printf("Status Code: %s\n", strconv.Itoa(response.StatusCode))
+		fmt.Printf("Content-Length: %s\n", strconv.FormatInt(response.ContentLength, 10))
 		body, _ := ioutil.ReadAll(response.Body)
 		fmt.Println(string(body))
 	},

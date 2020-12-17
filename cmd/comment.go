@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"bytes"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -34,7 +35,15 @@ var postCommentCommand = &cobra.Command{
 	Use:   "post",
 	Short: "post your comment to cahsper",
 	Long:  "post your comment to cahsper",
-	Args:  cobra.ExactArgs(1),
+	Args: func(cmd *cobra.Command, args []string) error {
+		if len(args) < 1 {
+			return errors.New("please input comment")
+		}
+		if len(args) > 101 {
+			return errors.New("number of argument less than 100")
+		}
+		return nil
+	},
 	Run: func(cmd *cobra.Command, args []string) {
 
 		cahsperConfigFilePath := utils.GetConfigFilePath()
@@ -55,7 +64,7 @@ var postCommentCommand = &cobra.Command{
 		u, err := url.Parse(cahsperConfig.Settings.ServerURL)
 		u.Path = path.Join(u.Path, "users", cahsperConfig.Settings.Aws.Cognito.UserName, "comments")
 
-		comment := []byte(fmt.Sprintf(`{"comment":"%s"}`, args[0]))
+		comment := []byte(fmt.Sprintf(`{"comment":"%s"}`, strings.Join(args, " ")))
 		request, err := http.NewRequest("POST", u.String(), bytes.NewBuffer(comment))
 		if err != nil {
 			log.Fatal(err)

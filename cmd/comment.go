@@ -15,6 +15,7 @@ import (
 	"strings"
 
 	"github.com/YoshinoriN/cahsper-cli/utils"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )
 
@@ -94,15 +95,27 @@ var postCommentCommand = &cobra.Command{
 		}
 		defer response.Body.Close()
 
+		statusCode := strconv.Itoa(response.StatusCode)
+		switch {
+		case strings.HasPrefix(statusCode, "2"):
+			color.Set(color.FgHiGreen)
+		case strings.HasPrefix(statusCode, "4"):
+			color.Set(color.FgHiRed)
+		case strings.HasPrefix(statusCode, "5"):
+			color.Set(color.FgHiRed)
+		default:
+			color.Set(color.FgHiMagenta)
+		}
 		fmt.Println("")
 		fmt.Printf("Request URL: %s\n", response.Request.URL)
 		fmt.Printf("Proto: %s\n", response.Proto)
 		fmt.Printf("Date: %s\n", response.Header.Get("Date"))
 		fmt.Printf("Server: %s\n", response.Header.Get("Server"))
 		fmt.Printf("Request Method: %s\n", response.Request.Method)
-		fmt.Printf("Status Code: %s\n", strconv.Itoa(response.StatusCode))
+		fmt.Printf("Status Code: %s\n", statusCode)
 		fmt.Printf("Content-Length: %s\n", strconv.FormatInt(response.ContentLength, 10))
 		body, _ := ioutil.ReadAll(response.Body)
 		fmt.Println(string(body))
+		color.Unset()
 	},
 }

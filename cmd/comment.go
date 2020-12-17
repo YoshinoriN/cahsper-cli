@@ -8,7 +8,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"path"
 	"strconv"
 	"strings"
@@ -57,7 +56,6 @@ var postCommentCommand = &cobra.Command{
 		if err != nil {
 			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 
@@ -68,7 +66,6 @@ var postCommentCommand = &cobra.Command{
 		request, err := http.NewRequest("POST", u.String(), bytes.NewBuffer(comment))
 		if err != nil {
 			log.Fatal(err)
-			panic(err)
 		}
 
 		request.Header.Set("Content-Type", "application/json")
@@ -79,7 +76,6 @@ var postCommentCommand = &cobra.Command{
 
 		if err != nil {
 			log.Fatal(err)
-			panic(err)
 		}
 		defer response.Body.Close()
 

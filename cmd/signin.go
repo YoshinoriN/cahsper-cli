@@ -43,7 +43,6 @@ var signInCommand = &cobra.Command{
 				os.Exit(0)
 			} else {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 

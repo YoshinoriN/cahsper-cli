@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"os"
 	"strings"
 
@@ -95,6 +96,6 @@ func InteractInputHelper(fieldName string, key CredentialKeyName, userName strin
 	}
 	err := SetCredential(userName, key, newValue)
 	if err != nil {
-		os.Exit(1)
+		log.Fatal(err)
 	}
 }

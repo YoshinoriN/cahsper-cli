@@ -47,7 +47,6 @@ var showCredentialCommmand = &cobra.Command{
 				os.Exit(0)
 			} else {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 		fmt.Println("UserName: ", userName)
@@ -57,7 +56,6 @@ var showCredentialCommmand = &cobra.Command{
 		if err != nil {
 			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 		fmt.Println("IdToken: ", idToken)
@@ -66,7 +64,6 @@ var showCredentialCommmand = &cobra.Command{
 		if err != nil {
 			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 		fmt.Println("AccessToken: ", accessToken)
@@ -75,7 +72,6 @@ var showCredentialCommmand = &cobra.Command{
 		if err != nil {
 			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 		fmt.Println("RefreshToken: ", refreshToken)
@@ -96,7 +92,6 @@ var setCredentialCommand = &cobra.Command{
 		userName := scanner.Text()
 		if userName == "" {
 			fmt.Print("UserName required.")
-			os.Exit(0)
 		}
 
 		var err error
@@ -107,7 +102,6 @@ var setCredentialCommand = &cobra.Command{
 				fmt.Printf("UserName %s does not exists. Continue to creating new account by %s.\n", userName, userName)
 			} else {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 		utils.InteractInputHelper("Password", utils.Account, userName, password)

@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"log"
-	"os"
 	"strings"
 
 	"github.com/YoshinoriN/cahsper-cli/utils"
@@ -38,7 +37,6 @@ var refreshTokenCommand = &cobra.Command{
 		if err != nil {
 			if !strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				log.Fatal(err)
-				os.Exit(1)
 			}
 		}
 

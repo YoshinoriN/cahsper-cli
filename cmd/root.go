@@ -16,10 +16,6 @@ var rootCommand = &cobra.Command{
 	},
 }
 
-func init() {
-	// TODO
-}
-
 func Execute() {
 	if err := rootCommand.Execute(); err != nil {
 		log.Fatal(err)

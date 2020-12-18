@@ -1,4 +1,4 @@
-# [WIP]: cahsper-cli
+# cahsper-cli
 
 CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
 

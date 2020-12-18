@@ -55,9 +55,14 @@ var refreshTokenCommand = &cobra.Command{
 		err = request.Send()
 		if err != nil {
 			log.Fatal(err)
-			panic(err)
 		}
-		utils.SetCredential(cahsperConfig.Settings.Aws.Cognito.UserName, utils.AccessToken, *response.AuthenticationResult.AccessToken)
-		utils.SetCredential(cahsperConfig.Settings.Aws.Cognito.UserName, utils.IDToken, *response.AuthenticationResult.IdToken)
+		err = utils.SetCredential(cahsperConfig.Settings.Aws.Cognito.UserName, utils.AccessToken, *response.AuthenticationResult.AccessToken)
+		if err != nil {
+			log.Fatal(err)
+		}
+		err = utils.SetCredential(cahsperConfig.Settings.Aws.Cognito.UserName, utils.IDToken, *response.AuthenticationResult.IdToken)
+		if err != nil {
+			log.Fatal(err)
+		}
 	},
 }

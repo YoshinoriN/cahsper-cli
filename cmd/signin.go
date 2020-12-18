@@ -67,7 +67,6 @@ var signInCommand = &cobra.Command{
 		})
 		if err != nil {
 			log.Fatal(err)
-			panic(err)
 		}
 
 		if response.ChallengeName == types.ChallengeNameTypePasswordVerifier {
@@ -80,12 +79,20 @@ var signInCommand = &cobra.Command{
 			})
 			if err != nil {
 				log.Fatal(err)
-				panic(err)
 			}
 
-			utils.SetCredential(userName, utils.AccessToken, *response.AuthenticationResult.AccessToken)
-			utils.SetCredential(userName, utils.IDToken, *response.AuthenticationResult.IdToken)
-			utils.SetCredential(userName, utils.RefreshToken, *response.AuthenticationResult.RefreshToken)
+			err = utils.SetCredential(userName, utils.AccessToken, *response.AuthenticationResult.AccessToken)
+			if err != nil {
+				log.Fatal(err)
+			}
+			err = utils.SetCredential(userName, utils.IDToken, *response.AuthenticationResult.IdToken)
+			if err != nil {
+				log.Fatal(err)
+			}
+			err = utils.SetCredential(userName, utils.RefreshToken, *response.AuthenticationResult.RefreshToken)
+			if err != nil {
+				log.Fatal(err)
+			}
 		}
 	},
 }

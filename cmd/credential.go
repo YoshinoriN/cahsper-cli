@@ -94,9 +94,7 @@ var setCredentialCommand = &cobra.Command{
 			fmt.Print("UserName required.")
 		}
 
-		var err error
-		var password = ""
-		userName, password, err = utils.GetAccount(userName)
+		userName, password, err := utils.GetAccount(userName)
 		if err != nil {
 			if strings.Contains(fmt.Sprintln(err), "secret not found in keyring") {
 				fmt.Printf("UserName %s does not exists. Continue to creating new account by %s.\n", userName, userName)

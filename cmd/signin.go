@@ -10,6 +10,7 @@ import (
 
 	"github.com/YoshinoriN/cahsper-cli/utils"
 	cognitosrp "github.com/alexrudd/cognito-srp/v2"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -94,5 +95,8 @@ var signInCommand = &cobra.Command{
 				log.Fatal(err)
 			}
 		}
+		color.Set(color.FgHiGreen)
+		fmt.Println("[succeeded]: successfully sign in and get a new auth token.")
+		color.Unset()
 	},
 }

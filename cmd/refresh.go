@@ -6,6 +6,7 @@ import (
 	"strings"
 
 	"github.com/YoshinoriN/cahsper-cli/utils"
+	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -64,5 +65,8 @@ var refreshTokenCommand = &cobra.Command{
 		if err != nil {
 			log.Fatal(err)
 		}
+		color.Set(color.FgHiGreen)
+		fmt.Println("[succeeded]: successfully get a new auth token.")
+		color.Unset()
 	},
 }

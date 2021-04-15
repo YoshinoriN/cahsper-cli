@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/YoshinoriN/cahsper-cli/utils"
+	"github.com/yoshinorin/cahsper-cli/utils"
 	cognitosrp "github.com/alexrudd/cognito-srp/v2"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"

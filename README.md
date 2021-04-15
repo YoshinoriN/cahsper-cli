@@ -1,6 +1,6 @@
 # cahsper-cli
 
-CLI tool for [Cahsper](https://github.com/YoshinoriN/cahsper).
+CLI tool for [Cahsper](https://github.com/yoshinorin/cahsper).
 
 # Requirements
 

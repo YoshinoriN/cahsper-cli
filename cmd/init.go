@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/YoshinoriN/cahsper-cli/utils"
+	"github.com/yoshinorin/cahsper-cli/utils"
 	"github.com/spf13/cobra"
 )
 

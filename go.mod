@@ -1,4 +1,4 @@
-module github.com/YoshinoriN/cahsper-cli
+module github.com/yoshinorin/cahsper-cli
 
 go 1.15
 

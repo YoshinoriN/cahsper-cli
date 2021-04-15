@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/YoshinoriN/cahsper-cli/cmd"
+	"github.com/yoshinorin/cahsper-cli/cmd"
 )
 
 func main() {
